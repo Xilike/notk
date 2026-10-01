@@ -111,13 +111,21 @@ class _WordCarouselScreenState extends State<WordCarouselScreen>
                             horizontal: 34, vertical: 20),
                         child: Column(
                           children: [
-                            Text(
-                              isSound ? soundForm : ex.emoji,
-                              style: TextStyle(
-                                  fontSize: isSound ? 130 : 105,
-                                  fontWeight: FontWeight.w900,
-                                  color: const Color(0xFF17365D)),
-                            ),
+                            if (isSound)
+                              Text(
+                                soundForm,
+                                style: TextStyle(
+                                    fontSize: 130,
+                                    fontWeight: FontWeight.w900,
+                                    color: const Color(0xFF17365D)),
+                              )
+                            else
+                              KidImage(
+                                asset: ex.imageAsset,
+                                emoji: ex.emoji,
+                                size: 150,
+                                radius: 28,
+                              ),
                             if (isSound)
                               Text(vowelName,
                                   style: TextStyle(
@@ -279,8 +287,11 @@ class _RepeatPracticeScreenState extends State<RepeatPracticeScreen>
                             horizontal: 34, vertical: 16),
                         child: Column(
                           children: [
-                            Text(ex.emoji,
-                                style: const TextStyle(fontSize: 110)),
+                            KidImage(
+                                asset: ex.imageAsset,
+                                emoji: ex.emoji,
+                                size: 150,
+                                radius: 28),
                             Text(ex.word,
                                 style: const TextStyle(
                                     fontSize: 43, fontWeight: FontWeight.w900)),

@@ -31,7 +31,8 @@ class AchievementsScreen extends StatelessWidget {
         appBar: AppBar(
             title: const Text('إنجازاتي',
                 style: TextStyle(fontWeight: FontWeight.w900))),
-        body: ListView(padding: const EdgeInsets.all(18), children: [
+        body: SkyBackground(
+          child: ListView(padding: const EdgeInsets.all(18), children: [
           Center(
               child: Image.asset('assets/images/trophy.png',
                   height: 120,
@@ -90,15 +91,15 @@ class AchievementsScreen extends StatelessWidget {
                                       : Colors.grey))
                         ]));
               })
-        ]));
+          ]),
+        ));
   }
 
   Widget _progress(String title, String value, double progress, Color color) =>
-      Container(
-          margin: const EdgeInsets.only(bottom: 12),
+      Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: KidCard(
           padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(22)),
           child: Column(children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text(title, style: const TextStyle(fontWeight: FontWeight.w900)),
@@ -106,10 +107,12 @@ class AchievementsScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w900, color: color))
             ]),
             const SizedBox(height: 9),
-            LinearProgressIndicator(
-                value: progress,
-                minHeight: 10,
-                color: color,
-                borderRadius: BorderRadius.circular(10))
-          ]));
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: LinearProgressIndicator(
+                  value: progress, minHeight: 10, color: color),
+            )
+          ]),
+        ),
+      );
 }

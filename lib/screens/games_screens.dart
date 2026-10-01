@@ -111,7 +111,8 @@ class _GamesHubScreenState extends State<GamesHubScreen>
       appBar: AppBar(
           title: const Text('ألعابي التعليمية 🎮',
               style: TextStyle(fontWeight: FontWeight.w900))),
-      body: Padding(
+      body: SkyBackground(
+        child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +133,7 @@ class _GamesHubScreenState extends State<GamesHubScreen>
                 itemBuilder: (context, i) {
                   final g = games[i];
                   return KidCard(
-                    color: g.color,
+                    gradient: [g.color, g.color.withValues(alpha: .78)],
                     onTap: () => Navigator.push(
                         context, MaterialPageRoute(builder: (_) => g.page)),
                     child: Padding(
@@ -140,8 +141,21 @@ class _GamesHubScreenState extends State<GamesHubScreen>
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(g.emoji, style: const TextStyle(fontSize: 48)),
-                          const SizedBox(height: 7),
+                          Container(
+                            width: 62,
+                            height: 62,
+                            decoration: BoxDecoration(
+                              color:
+                                  Colors.white.withValues(alpha: .25),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Center(
+                              child: Text(g.emoji,
+                                  style:
+                                      const TextStyle(fontSize: 34)),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
                           Text(g.title,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
@@ -163,6 +177,7 @@ class _GamesHubScreenState extends State<GamesHubScreen>
               ),
             ),
           ],
+        ),
         ),
       ),
     );
@@ -726,8 +741,12 @@ class _AnimalChoiceGameState extends _QuizState<AnimalChoiceGame> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(options[i].emoji,
-                                style: const TextStyle(fontSize: 82)),
+                            KidImage(
+                              asset: options[i].imageAsset,
+                              emoji: options[i].emoji,
+                              size: 110,
+                              radius: 26,
+                            ),
                           ],
                         ),
                       ),
@@ -932,7 +951,12 @@ class _ListenChooseGameState extends _QuizState<ListenChooseGame> {
                   : const Color(0xFFE5EDF4),
               width: 4),
         ),
-        child: Text(options[i].emoji, style: const TextStyle(fontSize: 80)),
+        child: KidImage(
+          asset: options[i].imageAsset,
+          emoji: options[i].emoji,
+          size: 110,
+          radius: 26,
+        ),
       ),
     );
   }
@@ -1133,8 +1157,12 @@ class _MatchWordGameState extends _QuizState<MatchWordGame> {
                                   : const Color(0xFFE5EDF4),
                               width: 4),
                         ),
-                        child: Text(options[i].emoji,
-                            style: const TextStyle(fontSize: 80)),
+                        child: KidImage(
+                          asset: options[i].imageAsset,
+                          emoji: options[i].emoji,
+                          size: 110,
+                          radius: 26,
+                        ),
                       ),
                     );
                   }),

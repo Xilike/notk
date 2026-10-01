@@ -27,7 +27,8 @@ class _LettersScreenState extends State<LettersScreen>
         appBar: AppBar(
             title: const Text('الحروف العربية',
                 style: TextStyle(fontWeight: FontWeight.w900))),
-        body: Padding(
+        body: SkyBackground(
+          child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(children: [
               const SectionTitle('اختار حرفًا',
@@ -45,6 +46,7 @@ class _LettersScreenState extends State<LettersScreen>
                         final open = i < state.unlockedLetters;
                         final done = state.completedLetters.contains(i);
                         return InkWell(
+                            borderRadius: BorderRadius.circular(20),
                             onTap: open
                                 ? () async {
                                     await Navigator.push(
@@ -57,14 +59,32 @@ class _LettersScreenState extends State<LettersScreen>
                                 : null,
                             child: Container(
                                 decoration: BoxDecoration(
-                                    color: open
-                                        ? const Color(0xFFFF5A67)
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.circular(18),
+                                    gradient: open
+                                        ? const LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Color(0xFFFF6B76),
+                                              Color(0xFFFF3D5A)
+                                            ],
+                                          )
+                                        : null,
+                                    color: open ? null : Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
                                         color: open
-                                            ? Colors.transparent
-                                            : const Color(0xFFE1EAF2))),
+                                            ? Colors.white
+                                            : AppColors.cardBorder,
+                                        width: open ? 3 : 2),
+                                    boxShadow: open
+                                        ? [
+                                            BoxShadow(
+                                                color: AppColors.red
+                                                    .withValues(alpha: .25),
+                                                blurRadius: 8,
+                                                offset: const Offset(0, 4))
+                                          ]
+                                        : null),
                                 child: Stack(children: [
                                   Center(
                                       child: Text(lessons[i].letter,
@@ -74,19 +94,24 @@ class _LettersScreenState extends State<LettersScreen>
                                               color: open
                                                   ? Colors.white
                                                   : const Color(0xFF91A0B2)))),
-                                  Positioned(
-                                      left: 5,
-                                      bottom: 4,
-                                      child: Text(
-                                          done
-                                              ? '⭐'
-                                              : open
-                                                  ? '▶️'
-                                                  : '🔒',
-                                          style: const TextStyle(fontSize: 14)))
+                                  if (done)
+                                    const Positioned(
+                                        left: 6,
+                                        bottom: 5,
+                                        child: Text('⭐',
+                                            style:
+                                                TextStyle(fontSize: 15))),
+                                  if (!done && !open)
+                                    const Positioned(
+                                        left: 6,
+                                        bottom: 5,
+                                        child: Text('🔒',
+                                            style:
+                                                TextStyle(fontSize: 13))),
                                 ])));
                       }))
             ])),
+        ),
       );
 }
 
@@ -160,99 +185,116 @@ class _LetterLessonScreenState extends State<LetterLessonScreen>
       appBar: AppBar(
           title: Text('حرف ${lesson.letter}',
               style: const TextStyle(fontWeight: FontWeight.w900))),
-      body: Padding(
+      body: SkyBackground(
+        child: Padding(
           padding: const EdgeInsets.all(18),
           child: Column(children: [
-            LinearProgressIndicator(
-                value: (page + 1) / examples.length,
-                minHeight: 9,
-                borderRadius: BorderRadius.circular(12),
-                color: const Color(0xFFFF5966)),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: LinearProgressIndicator(
+                  value: (page + 1) / examples.length,
+                  minHeight: 10,
+                  backgroundColor: const Color(0xFFE8F0F7),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                      AppColors.red)),
+            ),
             const SizedBox(height: 15),
             Expanded(
-                child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            borderRadius: BorderRadius.circular(24),
-                            onTap: () => SpeechService.speak(lesson.soundCue),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 8),
-                              child: Text(lesson.letter,
-                                  style: const TextStyle(
-                                      fontSize: 115,
-                                      fontWeight: FontWeight.w900,
-                                      color: Color(0xFFFF5361),
-                                      height: .95)),
-                            ),
-                          ),
-                          InkWell(
-                            borderRadius: BorderRadius.circular(24),
-                            onTap: () => SpeechService.speak(ex.word),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 28, vertical: 8),
-                              child: Column(children: [
-                                Text(ex.emoji,
-                                    style: const TextStyle(fontSize: 78)),
-                                Text(ex.word,
+                child: KidCard(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              borderRadius: BorderRadius.circular(24),
+                              onTap: () =>
+                                  SpeechService.speak(lesson.soundCue),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 4),
+                                child: Text(lesson.letter,
                                     style: const TextStyle(
-                                        fontSize: 38,
+                                        fontSize: 96,
                                         fontWeight: FontWeight.w900,
-                                        color: Color(0xFF17365D))),
-                              ]),
+                                        color: AppColors.red,
+                                        height: .95)),
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text('صوت الحرف: ${lesson.soundCue}',
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF59718A))),
-                          const SizedBox(height: 22),
-                          Wrap(
-                              spacing: 18,
-                              runSpacing: 12,
-                              alignment: WrapAlignment.center,
-                              children: [
-                                _action(
-                                    Icons.volume_up_rounded,
-                                    const Color(0xFF248FF0),
-                                    'استمع',
-                                    () => SpeechService.speakLessonTarget(
-                                        lesson.soundCue, ex.word,
-                                        automatic: false)),
-                                _action(
-                                    isRecording
-                                        ? Icons.stop_rounded
-                                        : Icons.mic_rounded,
-                                    const Color(0xFFFF4F5E),
-                                    isRecording ? 'إيقاف' : 'سجّل',
-                                    toggleRecord),
-                                _action(
-                                    Icons.play_arrow_rounded,
-                                    const Color(0xFF35B96A),
-                                    'اسمع نفسك', () async {
-                                  final ok = await recording.playLast();
-                                  if (!ok && mounted) {
-                                    snack(context, 'سجّل صوتك الأول 🎙️');
-                                  }
-                                }),
-                              ]),
-                          if (isRecording)
-                            const Padding(
-                                padding: EdgeInsets.only(top: 14),
-                                child: Text('🎙️ جاري التسجيل...',
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.w900)))
-                        ]))),
+                            InkWell(
+                              borderRadius: BorderRadius.circular(24),
+                              onTap: () => SpeechService.speak(ex.word),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 6),
+                                child: Column(children: [
+                                  KidImage(
+                                    asset: ex.imageAsset,
+                                    emoji: ex.emoji,
+                                    size: 150,
+                                    radius: 28,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(ex.word,
+                                      style: const TextStyle(
+                                          fontSize: 38,
+                                          fontWeight: FontWeight.w900,
+                                          color: AppColors.navy)),
+                                ]),
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text('صوت الحرف: ${lesson.soundCue}',
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.muted)),
+                            const SizedBox(height: 18),
+                            Wrap(
+                                spacing: 20,
+                                runSpacing: 12,
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  KidActionButton(
+                                      icon: Icons.volume_up_rounded,
+                                      color: AppColors.blue,
+                                      label: 'استمع',
+                                      onTap: () =>
+                                          SpeechService.speakLessonTarget(
+                                              lesson.soundCue, ex.word,
+                                              automatic: false)),
+                                  KidActionButton(
+                                      icon: isRecording
+                                          ? Icons.stop_rounded
+                                          : Icons.mic_rounded,
+                                      color: AppColors.red,
+                                      label:
+                                          isRecording ? 'إيقاف' : 'سجّل',
+                                      onTap: toggleRecord,
+                                      busy: recordingBusy),
+                                  KidActionButton(
+                                      icon: Icons.play_arrow_rounded,
+                                      color: AppColors.green,
+                                      label: 'اسمع نفسك',
+                                      onTap: () async {
+                                        final ok =
+                                            await recording.playLast();
+                                        if (!ok && mounted) {
+                                          snack(context,
+                                              'سجّل صوتك الأول 🎙️');
+                                        }
+                                      }),
+                                ]),
+                            if (isRecording)
+                              const Padding(
+                                  padding: EdgeInsets.only(top: 14),
+                                  child: Text('🎙️ جاري التسجيل...',
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.w900)))
+                          ]),
+                    ))),
             const SizedBox(height: 14),
             Row(children: [
               Expanded(
@@ -298,17 +340,7 @@ class _LetterLessonScreenState extends State<LetterLessonScreen>
                           style: const TextStyle(fontWeight: FontWeight.w900))))
             ])
           ])),
+      ),
     );
   }
-
-  Widget _action(
-          IconData icon, Color color, String label, VoidCallback onTap) =>
-      Column(mainAxisSize: MainAxisSize.min, children: [
-        IconButton.filled(
-            style: IconButton.styleFrom(
-                backgroundColor: color, minimumSize: const Size(64, 64)),
-            onPressed: onTap,
-            icon: Icon(icon, color: Colors.white, size: 33)),
-        Text(label, style: const TextStyle(fontWeight: FontWeight.bold))
-      ]);
 }

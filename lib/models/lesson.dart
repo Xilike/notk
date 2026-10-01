@@ -1,7 +1,10 @@
 class WordExample {
   final String word;
   final String emoji;
-  const WordExample(this.word, this.emoji);
+
+  /// Optional bundled illustration shown instead of [emoji] when present.
+  final String? imageAsset;
+  const WordExample(this.word, this.emoji, {this.imageAsset});
 }
 
 class LetterLessonData {

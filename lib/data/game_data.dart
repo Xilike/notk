@@ -6,20 +6,22 @@ class AnimalItem {
   const AnimalItem(this.name, this.spokenName, this.emoji, {this.imageAsset});
 }
 
+const _w = 'assets/images/words';
+
 const animals = <AnimalItem>[
-  AnimalItem('ثعلب', 'ثَعْلَب', '🦊'),
-  AnimalItem('أسد', 'أَسَد', '🦁'),
-  AnimalItem('قطة', 'قِطَّة', '🐱'),
-  AnimalItem('كلب', 'كَلْب', '🐶'),
-  AnimalItem('أرنب', 'أَرْنَب', '🐇'),
-  AnimalItem('فيل', 'فِيل', '🐘'),
-  AnimalItem('حصان', 'حِصَان', '🐴'),
-  AnimalItem('بطة', 'بَطَّة', '🦆'),
-  AnimalItem('سمكة', 'سَمَكَة', '🐟'),
-  AnimalItem('جمل', 'جَمَل', '🐪'),
-  AnimalItem('زرافة', 'زَرَافَة', '🦒'),
-  AnimalItem('دب', 'دُبّ', '🐻'),
-  AnimalItem('ضفدع', 'ضِفْدَع', '🐸'),
+  AnimalItem('ثعلب', 'ثَعْلَب', '🦊', imageAsset: '$_w/thaalab.png'),
+  AnimalItem('أسد', 'أَسَد', '🦁', imageAsset: '$_w/asad.png'),
+  AnimalItem('قطة', 'قِطَّة', '🐱', imageAsset: '$_w/qitta.png'),
+  AnimalItem('كلب', 'كَلْب', '🐶', imageAsset: 'assets/images/animals/kalb.png'),
+  AnimalItem('أرنب', 'أَرْنَب', '🐇', imageAsset: '$_w/arnab.png'),
+  AnimalItem('فيل', 'فِيل', '🐘', imageAsset: '$_w/fil.png'),
+  AnimalItem('حصان', 'حِصَان', '🐴', imageAsset: '$_w/hisan.png'),
+  AnimalItem('بطة', 'بَطَّة', '🦆', imageAsset: '$_w/batta.png'),
+  AnimalItem('سمكة', 'سَمَكَة', '🐟', imageAsset: '$_w/samaka.png'),
+  AnimalItem('جمل', 'جَمَل', '🐪', imageAsset: '$_w/gamal.png'),
+  AnimalItem('زرافة', 'زَرَافَة', '🦒', imageAsset: '$_w/zarafa.png'),
+  AnimalItem('دب', 'دُبّ', '🐻', imageAsset: '$_w/dubb.png'),
+  AnimalItem('ضفدع', 'ضِفْدَع', '🐸', imageAsset: '$_w/difda.png'),
 ];
 
 class ShapeItem {
