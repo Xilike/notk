@@ -1,0 +1,9 @@
+V1.4 source verification performed in artifact workspace:
+- New game data file exists with 12 unique animals and 6 unique shapes.
+- Arabic numeral rendering helper supports multi-digit values.
+- Games hub includes: letter ordering, number ordering, animal choice, shape choice, and the 3 existing games.
+- KG1/KG2 difficulty split is implemented for ordering length/range and choice counts.
+- New games call the existing reward system and gender-aware speech feedback.
+- Voice-pack generator includes new animal/shape spoken names and generic game instructions.
+- Pubspec version bumped to 1.4.0+14; no new Flutter dependencies were added.
+- Dart/Flutter executable is not available in the artifact container, so flutter analyze/test/build must be run on the user's prepared Windows environment before claiming APK success.

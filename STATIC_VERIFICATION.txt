@@ -1,0 +1,12 @@
+STATIC VERIFICATION REPORT — v1.1
+
+Dart files checked: 16
+Arabic lessons: 28
+Vocabulary examples: 84
+Relative imports: checked
+Delimiter balance: checked
+YAML parse: checked
+Assets/build scripts: checked
+
+RESULT: PASS
+Note: this is static integrity validation, not flutter analyze/test/build.

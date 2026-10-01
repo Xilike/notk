@@ -1,0 +1,40 @@
+name: tasis_alnotq
+description: تأسيس النطق - تطبيق تعليمي تفاعلي لأطفال KG
+publish_to: 'none'
+version: 1.6.1+17
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_tts: ^4.2.3
+  record: ^6.1.1
+  audioplayers: ^6.5.1
+  path_provider: ^2.1.5
+  shared_preferences: ^2.5.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/audio/
+    - assets/audio/letters/
+    - assets/audio/words/
+    - assets/audio/numbers/
+    - assets/audio/animals/
+    - assets/audio/shapes/
+    - assets/audio/instructions/
+    - assets/audio/feedback/boy/
+    - assets/audio/feedback/girl/
+    - assets/audio/boy/
+    - assets/audio/girl/

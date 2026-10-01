@@ -1,0 +1,12 @@
+V1.5 static verification
+- 28 unique Arabic letter lessons found.
+- 84 word examples found.
+- 12 animals and 6 shapes present.
+- spokenArabicNumber covers 0..10.
+- Flutter 3.47 ReorderableListView uses onReorderItem and no manual newIndex decrement.
+- New ShadowMatchGame variants: animal, letter, number.
+- Tap-to-speak added to sounds/words/repeat/letter lesson/game options.
+- Gendered praise/retry speech centralized in SpeechService.
+- No new pub dependencies added.
+
+Note: actual flutter analyze/test/build must run on the Windows Flutter environment before declaring APK success.

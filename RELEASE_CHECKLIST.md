@@ -1,0 +1,23 @@
+# Release checklist — v1.1
+
+- [x] 28 Arabic letter lessons
+- [x] 84 vocabulary examples
+- [x] KG1 / KG2 content depth differs
+- [x] Arabic RTL UI
+- [x] Arabic TTS
+- [x] Local microphone recording + playback
+- [x] Persistent progress and stars
+- [x] Game rounds / accuracy tracking
+- [x] Pronunciation attempt tracking
+- [x] Daily goal + streak logic
+- [x] 30-day activity history / 7-day parent chart
+- [x] Parent gate
+- [x] No ads / analytics SDKs
+- [x] Privacy document
+- [x] Windows one-command Flutter installer/build script
+- [x] Linux Flutter installer/build script
+- [x] GitHub Actions APK workflow
+- [ ] Run `flutter analyze` in a networked Flutter environment
+- [ ] Run `flutter test` in a networked Flutter environment
+- [ ] Build/sign final Play Store AAB
+- [ ] Test microphone/TTS on physical Android phones
