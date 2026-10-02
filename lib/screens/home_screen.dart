@@ -32,11 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final items = <({String title, IconData icon, Widget page})>[
-      (
-        title: 'الحروف',
-        icon: Icons.abc_rounded,
-        page: const LettersScreen()
-      ),
+      (title: 'الحروف', icon: Icons.abc_rounded, page: const LettersScreen()),
       (
         title: 'الأصوات',
         icon: Icons.volume_up_rounded,
@@ -210,8 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           const Row(
                             children: [
-                              Text('⭐',
-                                  style: TextStyle(fontSize: 18)),
+                              Text('⭐', style: TextStyle(fontSize: 18)),
                               SizedBox(width: 6),
                               Text(
                                 'مستواي في الحروف',
@@ -238,8 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: LinearProgressIndicator(
                           value: progress,
                           minHeight: 12,
-                          backgroundColor:
-                              const Color(0xFFE8F0F7),
+                          backgroundColor: const Color(0xFFE8F0F7),
                           valueColor: const AlwaysStoppedAnimation<Color>(
                             AppColors.yellow,
                           ),

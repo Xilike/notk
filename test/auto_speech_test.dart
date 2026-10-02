@@ -126,7 +126,7 @@ void main() {
         .firstWhere((s) => s.startsWith('أين '));
     final target = animals.firstWhere((a) => question == 'أين ${a.name}؟');
     expect(spoken, [SpeechService.whereQuestion(target.spokenName)]);
-    await tester.tap(find.text(target.emoji));
+    await tester.tap(find.byKey(ValueKey('animal-option-${target.name}')));
     await settle(tester);
     expect(spoken[1], target.spokenName);
     expect(spoken.where((s) => s.startsWith('أَيْنَ')).length, 2);

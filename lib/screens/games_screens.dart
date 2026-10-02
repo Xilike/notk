@@ -113,71 +113,69 @@ class _GamesHubScreenState extends State<GamesHubScreen>
               style: TextStyle(fontWeight: FontWeight.w900))),
       body: SkyBackground(
         child: Padding(
-        padding: const EdgeInsets.all(18),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SectionTitle('اختار لعبة',
-                subtitle:
-                    'كل إجابة صحيحة تكسبك عملة، وكل 10 إجابات تفتح صندوق مكافأة'),
-            const SizedBox(height: 15),
-            Expanded(
-              child: GridView.builder(
-                itemCount: games.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 14,
-                  mainAxisSpacing: 14,
-                  childAspectRatio: .86,
-                ),
-                itemBuilder: (context, i) {
-                  final g = games[i];
-                  return KidCard(
-                    gradient: [g.color, g.color.withValues(alpha: .78)],
-                    onTap: () => Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => g.page)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 62,
-                            height: 62,
-                            decoration: BoxDecoration(
-                              color:
-                                  Colors.white.withValues(alpha: .25),
-                              borderRadius: BorderRadius.circular(20),
+          padding: const EdgeInsets.all(18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SectionTitle('اختار لعبة',
+                  subtitle:
+                      'كل إجابة صحيحة تكسبك عملة، وكل 10 إجابات تفتح صندوق مكافأة'),
+              const SizedBox(height: 15),
+              Expanded(
+                child: GridView.builder(
+                  itemCount: games.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 14,
+                    mainAxisSpacing: 14,
+                    childAspectRatio: .86,
+                  ),
+                  itemBuilder: (context, i) {
+                    final g = games[i];
+                    return KidCard(
+                      gradient: [g.color, g.color.withValues(alpha: .78)],
+                      onTap: () => Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => g.page)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 62,
+                              height: 62,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: .25),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Center(
+                                child: Text(g.emoji,
+                                    style: const TextStyle(fontSize: 34)),
+                              ),
                             ),
-                            child: Center(
-                              child: Text(g.emoji,
-                                  style:
-                                      const TextStyle(fontSize: 34)),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(g.title,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.w900)),
-                          const SizedBox(height: 5),
-                          Text(g.subtitle,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  height: 1.25,
-                                  fontSize: 12.5)),
-                        ],
+                            const SizedBox(height: 8),
+                            Text(g.title,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.w900)),
+                            const SizedBox(height: 5),
+                            Text(g.subtitle,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    height: 1.25,
+                                    fontSize: 12.5)),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
         ),
       ),
     );
@@ -719,6 +717,7 @@ class _AnimalChoiceGameState extends _QuizState<AnimalChoiceGame> {
                     final chosen = selected == i;
                     final right = i == correct;
                     return InkWell(
+                      key: ValueKey('animal-option-${options[i].name}'),
                       borderRadius: BorderRadius.circular(28),
                       onTap: () async {
                         if (locked) return;
@@ -1447,9 +1446,16 @@ class _ShadowMatchGameState extends State<ShadowMatchGame>
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  _symbol(target,
-                                      shadow: !showSuccess,
-                                      size: target.isEmoji ? 102 : 104),
+                                  Semantics(
+                                    key: ValueKey('match-target-${target.id}'),
+                                    label: target.spoken,
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: _symbol(target,
+                                          shadow: !showSuccess,
+                                          size: target.isEmoji ? 102 : 104),
+                                    ),
+                                  ),
                                   const SizedBox(height: 6),
                                   Text(showSuccess ? 'صح! ✓' : 'ضعه هنا',
                                       style: TextStyle(

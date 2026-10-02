@@ -23,20 +23,34 @@ void main() {
                 textDirection: TextDirection.rtl,
                 child: ShadowMatchGame(kind: kind))));
         final targetFinder = find.byKey(const ValueKey('match-target'));
-        final display = tester
-            .widgetList<Text>(
-                find.descendant(of: targetFinder, matching: find.byType(Text)))
-            .first
-            .data;
+        final identityFinder = find.descendant(
+          of: targetFinder,
+          matching: find.byWidgetPredicate((widget) =>
+              widget is Semantics &&
+              widget.key is ValueKey<String> &&
+              (widget.key as ValueKey<String>)
+                  .value
+                  .startsWith('match-target-')),
+        );
+        expect(identityFinder, findsOneWidget);
+        final targetId =
+            (tester.widget<Semantics>(identityFinder).key as ValueKey<String>)
+                .value
+                .substring('match-target-'.length);
         final draggables = tester
             .widgetList<Draggable<MatchChoice>>(
                 find.byType(Draggable<MatchChoice>))
             .toList();
         expect(draggables.length, level == 'KG2' ? 4 : 3);
-        final right =
-            draggables.firstWhere((e) => e.data!.display == display).data!;
-        final wrong =
-            draggables.firstWhere((e) => e.data!.id != right.id).data!;
+        final correctChoices = draggables.where((e) => e.data?.id == targetId);
+        expect(correctChoices, hasLength(1),
+            reason: 'Target must be an option');
+        final right = correctChoices.single.data!;
+        final wrongChoices = draggables.where((e) => e.data?.id != right.id);
+        expect(wrongChoices, hasLength(draggables.length - 1));
+        final wrong = wrongChoices.first.data!;
+        final wrongSource = find.byKey(ValueKey('choice-${wrong.id}'));
+        final wrongOrigin = tester.getCenter(wrongSource);
         Future<void> drop(MatchChoice item) async {
           final source = find.byKey(ValueKey('choice-${item.id}'));
           await tester.drag(source,
@@ -47,7 +61,17 @@ void main() {
 
         await drop(wrong);
         expect(AppState.instance.coins, 0);
-        expect(find.byKey(ValueKey('choice-${wrong.id}')), findsOneWidget);
+        expect(wrongSource, findsOneWidget);
+        expect(tester.getCenter(wrongSource), wrongOrigin);
+        expect(find.text('ضعه هنا'), findsOneWidget);
+        for (final choice in draggables) {
+          expect(
+              tester
+                  .widget<Draggable<MatchChoice>>(
+                      find.byKey(ValueKey('choice-${choice.data!.id}')))
+                  .maxSimultaneousDrags,
+              1);
+        }
         await drop(right);
         expect(AppState.instance.coins, 1);
         expect(find.text('صح! ✓'), findsOneWidget);
@@ -56,6 +80,7 @@ void main() {
         expect(locked.maxSimultaneousDrags, 0);
         await tester.tap(find.byKey(ValueKey('choice-${right.id}')));
         await tester.pump();
+        await drop(wrong);
         expect(AppState.instance.coins, 1);
         await tester.pump(const Duration(milliseconds: 500));
         expect(find.text('الجولة 2/6'), findsOneWidget);

@@ -187,13 +187,17 @@ void main() {
       spoken.add(value);
     };
     addTearDown(() => SpeechService.playbackOverride = null);
+    tester.view.physicalSize = const Size(430, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(const MaterialApp(home: AnimalChoiceGame()));
     final question = tester
         .widgetList<Text>(find.byType(Text))
         .map((t) => t.data ?? '')
         .firstWhere((t) => t.startsWith('أين '));
     final target = animals.firstWhere((a) => question == 'أين ${a.name}؟');
-    final card = find.text(target.emoji);
+    final card = find.byKey(ValueKey('animal-option-${target.name}'));
     final objectFinished = Completer<void>();
     SpeechService.playbackOverride = (value) {
       spoken.add(value);
@@ -211,6 +215,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(spoken.first, target.spokenName);
     expect(spoken.length, greaterThan(1));
+    expect(SpeechService.text.praise, contains(spoken[1]));
     expect(AppState.instance.coins, 1);
     expect(find.text('السؤال 2/8'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());

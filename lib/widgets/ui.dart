@@ -68,8 +68,7 @@ class KidCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shadowColor =
-        (gradient?.last ?? color).withValues(alpha: .22);
+    final shadowColor = (gradient?.last ?? color).withValues(alpha: .22);
     return InkWell(
       borderRadius: BorderRadius.circular(radius),
       onTap: onTap,
@@ -254,8 +253,7 @@ class SectionTitle extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 2),
             child: Text(subtitle!,
-                style:
-                    const TextStyle(fontSize: 15, color: AppColors.muted)),
+                style: const TextStyle(fontSize: 15, color: AppColors.muted)),
           ),
       ]);
 }
